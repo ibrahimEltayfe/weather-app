@@ -1,0 +1,4 @@
+enum GEOSettings{
+  openAppSettings,
+  openLocationSettings
+}
