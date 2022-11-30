@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_projects/constants/app_colors.dart';
 
 TextStyle _getTextStyle(double fontSize, Color color,String fontFamily,TextDecoration? textDecoration,FontWeight? fontWeight){
@@ -19,7 +18,7 @@ TextStyle getRegularTextStyle({
          TextDecoration? textDecoration,
          FontWeight? fontWeight
 }) {
-  return _getTextStyle(fontSize.sp,color,fontFamily,textDecoration,fontWeight);
+  return _getTextStyle(fontSize,color,fontFamily,textDecoration,fontWeight);
 }
 
 TextStyle getBoldTextStyle({
@@ -29,13 +28,13 @@ TextStyle getBoldTextStyle({
   TextDecoration? textDecoration,
   FontWeight? fontWeight = FontWeight.w700
 }) {
-  return _getTextStyle(fontSize.sp,color,fontFamily,textDecoration,fontWeight);
+  return _getTextStyle(fontSize,color,fontFamily,textDecoration,fontWeight);
 }
 
 TextStyle getAppNameStyle(){
   return TextStyle(
       fontFamily: 'panton',
-      fontSize: 38.sp,
+      fontSize: 38,
       color: Colors.black,
   );
 }

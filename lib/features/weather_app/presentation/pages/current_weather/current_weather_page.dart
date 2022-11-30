@@ -1,8 +1,6 @@
-import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -47,31 +45,31 @@ class CurrentWeatherPage extends StatelessWidget {
                       child:BlocBuilder<CurrentWeatherCubit,CurrentWeatherState>(
                           builder: (context,state) {
                             if(state is CurrentWeatherLoading){
-                              return _buildLoadingWidget();
+                              return _buildLoadingWidget(context);
                             }else if(state is CurrentWeatherError){
-                              return _buildErrorWidget(state, theme.textTheme.headline1!);
+                              return _buildErrorWidget(state, theme.textTheme.headline1!,context);
                             }else if(state is CurrentWeatherDataFetched){
                               WeatherEntity data = state.weatherData;
                               //log(data.weather![0].main!.toString());
                               return Column(
                                 children: [
-                                  SizedBox(height: 14.h,),
+                                  SizedBox(height: 22,),
 
                                   //city
                                   Center(
                                     child: Text(
                                         '${data.cityName}/${data.sys!.country}',
-                                        style: theme.textTheme.headline1
+                                        style: theme.textTheme.headline1!.copyWith(fontSize:28 )
                                     ),
                                   ),
 
                                   //page state
                                   Text(
                                       'now',
-                                      style: theme.textTheme.headline1!.copyWith(color: AppColors.grey,fontSize: 17)
+                                      style: theme.textTheme.headline1!.copyWith(color: AppColors.grey,fontSize: 22)
                                   ),
 
-                                  SizedBox(height: 15.h,),
+                                  SizedBox(height: 21,),
 
                                   //image
                                   SvgPicture.asset(
@@ -82,27 +80,27 @@ class CurrentWeatherPage extends StatelessWidget {
                                         sunrise: data.sys!.sunrise!,
                                         clouds: data.clouds!.all!
                                     ),
-                                    width: 78.w,
-                                    height: 78.h,
+                                    width: 105,
+                                    height: 105,
                                   ),
 
-                                  SizedBox(height: 10.h,),
+                                  SizedBox(height: 21,),
 
                                   //temp
                                   Text(
                                       '${data.main!.temp!}',
-                                      style: theme.textTheme.headline1!.copyWith(fontFamily: 'bahnsch', fontSize: 40.sp,)
+                                      style: theme.textTheme.headline1!.copyWith(fontFamily: 'bahnsch', fontSize: 48,)
                                   ),
 
-                                  SizedBox(height: 10.h,),
+                                  SizedBox(height: 8,),
 
                                   //desc
                                   Text(
                                     capitalize('${data.weather![0].description}'),
-                                    style:theme.textTheme.headline1!.copyWith(fontSize: 18.sp) ,
+                                    style:theme.textTheme.headline1!.copyWith(fontSize: 28) ,
                                   ),
 
-                                  SizedBox(height: 20.h,),
+                                  SizedBox(height: 24,),
 
                                   //additional info`s
                                   Column(
@@ -111,33 +109,33 @@ class CurrentWeatherPage extends StatelessWidget {
                                       additionalInfo(
                                         icon: FontAwesomeIcons.wind,
                                         text: '${data.wind!.speed}m/s',
-                                        textStyle: theme.textTheme.headline1!.copyWith(fontSize: 15.sp),
+                                        textStyle: theme.textTheme.headline1!.copyWith(fontSize: 20),
                                       ),
                                       additionalInfo(
                                         weatherIcon: WeatherIcons.humidity,
                                         text:'${data.main!.humidity!}%',
-                                        textStyle: theme.textTheme.headline1!.copyWith(fontSize: 15.sp),
+                                        textStyle: theme.textTheme.headline1!.copyWith(fontSize: 20),
                                       ),
                                       additionalInfo(
                                         icon: FontAwesomeIcons.cloud,
                                         text:'${data.clouds!.all}%',
-                                        textStyle: theme.textTheme.headline1!.copyWith(fontSize: 15.sp),
+                                        textStyle: theme.textTheme.headline1!.copyWith(fontSize: 20),
                                       ),
                                     ],
                                   ),
 
-                                  SizedBox(height: 36.h,),
+                                  SizedBox(height: 55,),
 
                                   //forecast
                                   Align(
                                     alignment: Alignment(-0.75,0.0),
                                     child: Text(
                                       'Weather Forecast',
-                                      style: theme.textTheme.headline1!.copyWith(fontSize: 18),
+                                      style: theme.textTheme.headline1!.copyWith(fontSize: 25),
                                     ),
                                   ),
 
-                                  SizedBox(height: 12.h,),
+                                  SizedBox(height: 14,),
 
                                   BlocBuilder<WeatherForecastCubit,WeatherForecastState>(
                                     builder: (context, state) {
@@ -158,7 +156,8 @@ class CurrentWeatherPage extends StatelessWidget {
                                                   ),
                                                   icon: '${EndPoints.networkIcon}${state.weatherData.temps![index].weather![0].icon!}.png',
                                                   temp: state.weatherData.temps![index].main!.temp! as double,
-                                                  textStyle: theme.textTheme.headline2!
+                                                  textStyle: theme.textTheme.headline2!.copyWith(fontSize: 21),
+                                                  context: context
                                               ),
                                           ),
                                         );
@@ -169,7 +168,7 @@ class CurrentWeatherPage extends StatelessWidget {
 
                                   ),
 
-                                  SizedBox(height: 12.h,),
+                                  SizedBox(height: 12,),
 
                                 ],);
                             }else{
@@ -240,7 +239,7 @@ class CurrentWeatherPage extends StatelessWidget {
     required TextStyle textStyle
   }){
     return SizedBox(
-      height: 35.h,
+      height: 35,
       child: Row(
        crossAxisAlignment: CrossAxisAlignment.center,
        mainAxisSize: MainAxisSize.min,
@@ -248,16 +247,16 @@ class CurrentWeatherPage extends StatelessWidget {
         children: [
           weatherIcon!=null
           ?SizedBox(
-            width:19.w,
-            height: 25.h,
+            width:19,
+            height: 25,
             child: FittedBox(
                 fit: BoxFit.cover,
                 child:BoxedIcon(weatherIcon,)
             ),
           )
-          :Icon(icon,size: 18.sp,),
+          :Icon(icon,size: 18,),
 
-          SizedBox(width: 12.w,),
+          SizedBox(width: 12,),
 
           Text(text,style: textStyle,)
         ],
@@ -285,26 +284,25 @@ class CurrentWeatherPage extends StatelessWidget {
     required String date,
     required double temp,
     required String icon,
-    required TextStyle textStyle
+    required TextStyle textStyle,
+    required BuildContext context
   }){
     return SizedBox(
-      width: 0.85.sw,
-      height: 32.h,
+      width:  MediaQuery.of(context).size.width*0.95,
+      height: 38,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           SizedBox(
-             width: 98.w,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                  child: Text(date,style: textStyle,)
-              )
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(date,style: textStyle,)
+            )
           ),
 
-          Image.network(icon,width: 25.w,height: 25.h,),
+          Flexible(child: Image.network(icon,width: 32,height: 32,)),
           //Icon(icon,size: 19.sp,),
           SizedBox(
-              width: 38.w,
               child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text('${temp.toStringAsFixed(1)}°',style: textStyle,)
@@ -315,23 +313,28 @@ class CurrentWeatherPage extends StatelessWidget {
     );
   }
 
-  _buildLoadingWidget(){
+  _buildLoadingWidget(BuildContext context){
     return Container(
-      height: 1.sh,
+      height:  MediaQuery.of(context).size.height,
       alignment: Alignment.center,
-      child: Lottie.asset('assets/lottie/wind.json',width: 0.6.sw,height: 0.4.sh,fit: BoxFit.contain),
+      child: Lottie.asset('assets/lottie/wind.json',width:  MediaQuery.of(context).size.height*0.6,height:  MediaQuery.of(context).size.height*0.4,fit: BoxFit.contain),
     );
   }
 
-  _buildErrorWidget(CurrentWeatherError state,TextStyle txtStyle){
+  _buildErrorWidget(CurrentWeatherError state,TextStyle txtStyle,BuildContext context){
     if(state.type == null){
       return Container(
-          height: 0.95.sh,
+          height:  MediaQuery.of(context).size.height*0.95,
           alignment: Alignment.center,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Lottie.asset('assets/lottie/winter error.json',width: 0.5.sw,height: 0.3.sh,fit: BoxFit.contain),
+              Lottie.asset(
+                  'assets/lottie/winter error.json',
+                  width:  MediaQuery.of(context).size.width*0.5,
+                  height:  MediaQuery.of(context).size.height*0.3,
+                  fit: BoxFit.contain
+              ),
               Text(state.message,style: txtStyle,)
             ],
           )
@@ -339,19 +342,19 @@ class CurrentWeatherPage extends StatelessWidget {
     }else{
       bool isLocationSettings = state.type == GEOSettings.openLocationSettings.name;
       return SizedBox(
-        width: 1.sw,
-        height: 0.95.sh,
+        width:  MediaQuery.of(context).size.width,
+        height:  MediaQuery.of(context).size.height*0.95,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(state.message,style: txtStyle.copyWith(fontSize: 20.sp)),
+            Text(state.message,style: txtStyle.copyWith(fontSize: 20)),
 
-            SizedBox(height: 14.h,),
+            SizedBox(height: 14,),
 
             ElevatedButton(
               style:ButtonStyle(
                 fixedSize: MaterialStateProperty.all<Size>(
-                   Size(0.45.sw,0.07.sh)
+                   Size( MediaQuery.of(context).size.width*0.45, MediaQuery.of(context).size.height*0.07)
                 )
               ) ,
               onPressed: () async{

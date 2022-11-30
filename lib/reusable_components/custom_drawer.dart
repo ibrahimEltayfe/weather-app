@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_projects/constants/app_colors.dart';
 import 'package:my_projects/constants/app_routes.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({Key? key}) : super(key: key);
@@ -15,20 +15,23 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
   late AnimationController heightAnimController;
   late AnimationController widthAnimController;
   late CurvedAnimation widthAnim ;
+
   @override
   void initState() {
+
     diceAnimController = AnimationController(
         vsync: this,
         duration: const Duration(milliseconds: 1100),
         lowerBound: 1,
-        upperBound: 180.h
+        upperBound: 180
     );
+
 
     heightAnimController = AnimationController(
         vsync: this,
         duration: const Duration(milliseconds: 670),
         lowerBound:1,
-        upperBound: 0.8.sh
+        upperBound: 500
     );
 
     widthAnimController = AnimationController(
@@ -44,7 +47,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: 1.sh,
+      width: MediaQuery.of(context).size.width,
       elevation: 0,
       backgroundColor: Colors.black.withOpacity(0.75),
 
@@ -54,7 +57,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
        direction: Axis.vertical,
        clipBehavior: Clip.none,
        children: [
-         SizedBox(height: 0.08.sh),
+         SizedBox(height:  MediaQuery.of(context).size.height*0.08),
          //home page
          GestureDetector(
            onTap: (){
@@ -63,7 +66,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
            child: _buildText('Home')
          ),
 
-         SizedBox(height: 0.04.sh),
+         SizedBox(height:  MediaQuery.of(context).size.height*0.04),
 
          //dice page
          GestureDetector(
@@ -81,7 +84,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
             builder:(context, child) =>
                 Transform.scale(
                   scale: diceAnimController.value,
-                  origin:Offset(6.9.r,9.16.r) ,
+                  origin:Offset(8.5,10.6) ,
                   alignment: Alignment.topCenter,
 
                   child: _buildText('Dice')
@@ -89,7 +92,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
           ),
         ),
 
-         SizedBox(height: 0.04.sh),
+         SizedBox(height:  MediaQuery.of(context).size.height*0.04),
 
          //weather app
          GestureDetector(
@@ -105,7 +108,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
                });
              },
               child: SizedBox(
-                width: 1.sw,
+                width:  MediaQuery.of(context).size.width,
                 child: Stack(
                   alignment: Alignment.topCenter,
                   clipBehavior: Clip.none,
@@ -113,7 +116,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
                     _buildText('Weather App'),
 
                     Positioned(
-                      top: 21.h,
+                      top: 21,
                       child: AnimatedBuilder(
                         animation: widthAnimController,
                         builder: (context, child) {
@@ -123,8 +126,8 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
                               return Transform.scale(
                                 scaleY: heightAnimController.value,
                                 child: Container(
-                                  width: 1.sw*widthAnim.value,
-                                  height: 3.h,
+                                  width:  MediaQuery.of(context).size.width*widthAnim.value,
+                                  height: 3,
                                   color: AppColors.bgColor,
                                 ),
                               );
@@ -138,7 +141,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
               )
          ),
 
-         SizedBox(height: 0.04.sh),
+         SizedBox(height:  MediaQuery.of(context).size.height*0.04),
 
          //google search app
          GestureDetector(
@@ -148,7 +151,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
              child: _buildText('Google Search')
           ),
 
-         SizedBox(height: 0.04.sh),
+         SizedBox(height:  MediaQuery.of(context).size.height*0.04),
 
          //google search app
          GestureDetector(
@@ -177,7 +180,7 @@ class _CustomDrawerState extends State<CustomDrawer> with TickerProviderStateMix
 
   Text _buildText(String text){
     return Text(text,style: TextStyle(
-        fontSize: 35.sp,
+        fontSize: 42,
         color: Colors.white,
         fontFamily: 'mat'
     )

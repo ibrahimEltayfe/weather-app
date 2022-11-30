@@ -2,12 +2,12 @@ import 'dart:developer' as d;
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_cube/flutter_cube.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../../reusable_components/custom_drawer.dart';
 
 class Dice extends StatefulWidget {
   const Dice({Key? key}) : super(key: key);
-
   @override
   State<Dice> createState() => _DiceState();
 }
@@ -17,6 +17,7 @@ class _DiceState extends State<Dice> with SingleTickerProviderStateMixin{
   late AnimationController _animationController;
   late CurvedAnimation _curvedAnimation;
   Vector3 values = Vector3.all(0);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -47,35 +48,34 @@ class _DiceState extends State<Dice> with SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: const CustomDrawer(),
       appBar: AppBar(
         elevation: 4,
         backgroundColor: Colors.white,
-        title:Text('Dice',style: TextStyle(
+        title: const Text('Dice',style: TextStyle(
             color: Colors.black,
             fontFamily: 'bsan',
-            fontSize: 26.sp
+            fontSize: 24
         ),),
 
-        leading: Builder(
-            builder: (context) {
-              return GestureDetector(
-                onTap: (){
-                  Scaffold.of(context).openDrawer();
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(top: 15.r,left: 15.r),
-                  child: FaIcon(
-                    FontAwesomeIcons.bars,
-                    size: 26.sp,
-                    color: Colors.black,
-                  ),
-                ),
-              );
-            }
+        leading: GestureDetector(
+          onTap: (){
+             _scaffoldKey.currentState!.openDrawer();
+          },
+          child: Padding(
+            padding: EdgeInsets.only(top: 15,left: 15),
+            child: FaIcon(
+              FontAwesomeIcons.bars,
+              size: 26,
+              color: Colors.black,
+            ),
+          ),
         ),
         automaticallyImplyLeading: false,
 
       ),
+
       body: Center(
         child: GestureDetector(
           onTap: (){
@@ -89,8 +89,8 @@ class _DiceState extends State<Dice> with SingleTickerProviderStateMixin{
             }
           },
           child: SizedBox(
-            width: 1.sw,
-            height: 1.sh,
+            width: MediaQuery.of(context).size.width,
+            height:  MediaQuery.of(context).size.height,
             child: AnimatedBuilder(
               animation: _curvedAnimation,
               builder: (context, child) =>
@@ -114,7 +114,7 @@ class _DiceState extends State<Dice> with SingleTickerProviderStateMixin{
     while(rand % 90 != 0) {
       rand = Random().nextInt(max);
     }
-    d.log( rand.toDouble().toString());
+    d.log(rand.toDouble().toString());
     return rand.toDouble();
   }
 

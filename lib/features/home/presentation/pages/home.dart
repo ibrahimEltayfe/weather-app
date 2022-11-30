@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:my_projects/reusable_components/scaffold_wrapper.dart';
 
@@ -24,8 +21,8 @@ class _HomeState extends State<Home> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-              height: 110.h,
-              width: 136.w,
+              height: 132,
+              width: 159,
               child: Lottie.asset(
                   'assets/lottie/hi.json',
                   repeat: false,
@@ -34,13 +31,13 @@ class _HomeState extends State<Home> {
           ),
 
           Padding(
-            padding: EdgeInsets.only(left: 35.r),
+            padding: EdgeInsets.only(left: 35),
             child: Builder(
                 builder: (context) {
                   return ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.black87),
-                        fixedSize: MaterialStateProperty.all(Size(double.infinity,58.h)),
+                        fixedSize: MaterialStateProperty.all(Size(double.infinity,70)),
 
                       ),
                       onPressed: (){
@@ -48,7 +45,7 @@ class _HomeState extends State<Home> {
                       },
                       child: FittedBox(
                         fit: BoxFit.cover,
-                          child: Text('My Simple Projects',style: TextStyle(fontSize: 24.sp,fontFamily: 'bsan'),)
+                          child: Text('My Simple Projects',style: TextStyle(fontSize: 28,fontFamily: 'bsan'),)
                       )
 
                   );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:my_projects/constants/app_colors.dart';
 import 'package:my_projects/constants/app_styles.dart';
 
@@ -10,7 +9,7 @@ ThemeData lightTheme(){
     fontFamily: 'sen',
     primaryColor: AppColors.blackBlue,
     backgroundColor: AppColors.bgColor,
-    iconTheme: IconThemeData(color: AppColors.blackBlue,size: 19.sp),
+    iconTheme: IconThemeData(color: AppColors.blackBlue,size: 19),
     textTheme: TextTheme(
       headline1: getBoldTextStyle(color: AppColors.blackBlue),
       headline2: getRegularTextStyle(color: AppColors.blackBlue)

@@ -1,7 +1,5 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:my_projects/constants/app_colors.dart';
@@ -62,8 +60,8 @@ class _MapPageState extends State<MapPage> {
                                   Marker(
                                       point: LatLng(snapshot.data!.latitude,snapshot.data!.longitude),
                                       builder:(context) => Container(
-                                        width: 50.w,
-                                        height: 50.h,
+                                        width: 50,
+                                        height: 50,
                                         child: FittedBox(
                                           child: Icon(Icons.location_on_outlined,color: AppColors.blackBlue,),
                                         ),
@@ -87,19 +85,19 @@ class _MapPageState extends State<MapPage> {
 
   Widget _buildErrorWidget(List<String?> error,bool isLocationSettings,TextStyle txtTheme){
     return SizedBox(
-      width: 1.sw,
-      height: 0.95.sh,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height*0.95,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(error[0]??'error',style: txtTheme.copyWith(fontSize: 20.sp)),
+          Text(error[0]??'error',style: txtTheme.copyWith(fontSize: 20)),
 
-          SizedBox(height: 14.h,),
+          SizedBox(height: 14,),
 
           ElevatedButton(
               style:ButtonStyle(
                   fixedSize: MaterialStateProperty.all<Size>(
-                      Size(0.45.sw,0.07.sh)
+                      Size(MediaQuery.of(context).size.width*0.45,MediaQuery.of(context).size.height*0.07)
                   )
               ) ,
               onPressed: () async{
