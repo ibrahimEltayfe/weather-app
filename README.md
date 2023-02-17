@@ -1,4 +1,8 @@
-Weather App:
+.Dice App
+ - Flutter cube
+.Google Search App
+ - bloc - restful api
+.Weather App:
  - open weather map api
  - clean archeticture
  - bloc pattern
