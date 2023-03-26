@@ -38,5 +38,4 @@ void init(){
   injector.registerLazySingleton<AirPollutionForecastUseCase>(() => AirPollutionForecastUseCase(injector()));
   injector.registerLazySingleton<CurrentAirPollutionUseCase>(() => CurrentAirPollutionUseCase(injector()));
   injector.registerLazySingleton<HistoricalAirPollutionUseCase>(() => HistoricalAirPollutionUseCase(injector()));
-   //injector.registerLazySingleton<usecase>(() => usecase(injector()));
 }

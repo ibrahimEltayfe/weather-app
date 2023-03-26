@@ -32,33 +32,35 @@ class CustomModalBottomSheet extends StatelessWidget {
                   SizedBox(height:20),
                   Text("Change Theme",style: Theme.of(context).textTheme.headline1!.copyWith(fontSize: 22),),
 
-                  //switch
-                  SizedBox(
-                    width: 55,
-                    height: 45,
-                    child:_buildSwitch(context)
-                  ),
+                  _BuildThemeSwitcher()
+
                 ],
               ),
             )
         );
       },
-      child: _bottomSheetShape(Theme.of(context)),
+      child: const _BottomSheetShape(),
     );
   }
 
-  Widget _bottomSheetShape(ThemeData theme){
+}
+
+class _BottomSheetShape extends StatelessWidget {
+  const _BottomSheetShape({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 34,
       alignment: Alignment(0,-0.5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(25),),
-        color: theme.backgroundColor,
+        color: Theme.of(context).backgroundColor,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.16),
-            offset: Offset(0, 1),
+            offset: const Offset(0, 1),
             blurRadius: 6,
           ),
         ],
@@ -68,25 +70,40 @@ class CustomModalBottomSheet extends StatelessWidget {
         height: 3.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
-          color: theme.primaryColor.withOpacity(0.6),
+          color: Theme.of(context).primaryColor.withOpacity(0.6),
         ),
       ),
     );
   }
+}
 
-  Widget _buildSwitch(BuildContext context){
-    return Platform.isAndroid
-        ?Switch(
-        value: context.read<ThemeManagerBloc>().isDark,
-        onChanged: (val){
-          context.read<ThemeManagerBloc>().add(ThemeChanged());
-        }
-       )
-        :CupertinoSwitch(
-        value: context.read<ThemeManagerBloc>().isDark,
-        onChanged: (val){
-          context.read<ThemeManagerBloc>().add(ThemeChanged());
-        }
+class _BuildThemeSwitcher extends StatelessWidget {
+  const _BuildThemeSwitcher({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 55,
+      height: 45,
+      child: Platform.isAndroid
+          ? Switch(
+          value: context
+              .read<ThemeManagerBloc>()
+              .isDark,
+          onChanged: (val) {
+            context.read<ThemeManagerBloc>().add(ThemeChanged());
+          }
+      )
+          : CupertinoSwitch(
+          value: context
+              .read<ThemeManagerBloc>()
+              .isDark,
+          onChanged: (val) {
+            context.read<ThemeManagerBloc>().add(ThemeChanged());
+          }
+      ),
     );
   }
 }
+
+

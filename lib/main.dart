@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
                    );
                  },
                   onGenerateRoute:RoutesManager.routes,
-                  initialRoute:AppRoutes.homePage,
+                  initialRoute:AppRoutes.weatherPage,
                 );
               },
 

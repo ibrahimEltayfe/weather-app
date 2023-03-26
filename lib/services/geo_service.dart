@@ -1,7 +1,7 @@
 import 'dart:developer';
-
 import 'package:geolocator/geolocator.dart';
-import 'package:my_projects/constants/app_constants.dart';
+
+import '../enums/geo_settings.dart';
 
 class GEOService {
   static Future<Position> determinePosition({bool isForecast=false}) async {
